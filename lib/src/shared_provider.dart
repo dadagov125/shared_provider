@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +16,14 @@ class SharedProvider<T> extends Provider<T> {
     required String instanceKey,
     Dispose<T>? dispose,
     Key? key,
+    Widget? child,
+    TransitionBuilder? builder,
+    bool? lazy,
   }) : super(
           key: key,
+          child: child,
+          builder: builder,
+          lazy: lazy,
           create: (context) {
             return SharedInstance.acquire(
               createValue: () => acquire(context),
