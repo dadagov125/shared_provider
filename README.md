@@ -21,8 +21,7 @@ Here is an example of how to use `SharedProvider` in your Flutter application. I
 ```dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:your_package_name/shared_provider.dart';
+import 'package:shared_provider/shared_provider.dart';
 
 void main() {
   runApp(const MyApp());
