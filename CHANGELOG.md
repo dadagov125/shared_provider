@@ -1,3 +1,6 @@
+## 0.0.4
+* add: startListening
+
 ## 0.0.3
 * add: example project.
 
