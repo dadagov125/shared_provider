@@ -1,3 +1,6 @@
+# 0.1.1
+* change instanceKey to optional
+
 # 0.1.0
 * BREAKING: rename acquire to create
 
