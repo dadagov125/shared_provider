@@ -4,6 +4,8 @@ import 'package:provider/single_child_widget.dart';
 
 import 'shared_instance.dart';
 
+String _getInstanceKey(Type type) => type.toString();
+
 /// Creates a value, store it, and expose it to its descendants.
 /// Will also share it with other providers by value type or instanceKey.
 ///
@@ -13,7 +15,7 @@ import 'shared_instance.dart';
 class SharedProvider<T> extends SingleChildStatelessWidget {
   SharedProvider({
     Create<T>? create,
-    required String instanceKey,
+    String? instanceKey,
     Dispose<T>? dispose,
     Key? key,
     Widget? child,
@@ -26,7 +28,7 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
         _update = update,
         _startListening = startListening,
         create = create,
-        _instanceKey = instanceKey,
+        _instanceKey = instanceKey ?? _getInstanceKey(T),
         _dispose = dispose,
         _lazy = lazy,
         _builder = builder,
@@ -88,7 +90,7 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
 
 class SharedProxyProvider<T, R> extends SharedProvider<R> {
   SharedProxyProvider({
-    required String instanceKey,
+    String? instanceKey,
     Key? key,
     Create<R>? create,
     required ProxyProviderBuilder<T, R> update,
