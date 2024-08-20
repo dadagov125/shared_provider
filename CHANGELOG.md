@@ -1,3 +1,8 @@
+## 0.0.6
+* SharedProxyProvider
+* add updateShouldNotify
+* fix update
+
 ## 0.0.5
 * add: update
 

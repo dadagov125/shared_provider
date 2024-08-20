@@ -1,6 +1,6 @@
 name: shared_provider
 description: "Shared instance provider package"
-version: 0.0.5
+version: 0.0.6
 repository: https://github.com/dadagov125/shared_provider
 
 environment:
