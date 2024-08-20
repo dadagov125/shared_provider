@@ -12,7 +12,7 @@ import 'shared_instance.dart';
 /// using the shared instance is unmounted from the widget tree.
 class SharedProvider<T> extends SingleChildStatelessWidget {
   SharedProvider({
-    Create<T>? acquire,
+    Create<T>? create,
     required String instanceKey,
     Dispose<T>? dispose,
     Key? key,
@@ -25,7 +25,7 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
   })  : _updateShouldNotify = updateShouldNotify,
         _update = update,
         _startListening = startListening,
-        _acquire = acquire,
+        create = create,
         _instanceKey = instanceKey,
         _dispose = dispose,
         _lazy = lazy,
@@ -36,7 +36,7 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
   final bool? _lazy;
   final Dispose<T>? _dispose;
   final String _instanceKey;
-  final Create<T>? _acquire;
+  final Create<T>? create;
   final StartListening<T>? _startListening;
   final T Function(BuildContext context, T? value)? _update;
   final UpdateShouldNotify<T>? _updateShouldNotify;
@@ -48,10 +48,10 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
       '$runtimeType used outside of MultiProvider must specify a child',
     );
     return InheritedProvider<T>(
-      create: _acquire != null
+      create: create != null
           ? (context) {
               return SharedInstance.acquire(
-                createValue: () => _acquire!.call(context),
+                createValue: () => create!.call(context),
                 acquirer: context,
                 instanceKey: _instanceKey,
               ).value;
@@ -90,7 +90,7 @@ class SharedProxyProvider<T, R> extends SharedProvider<R> {
   SharedProxyProvider({
     required String instanceKey,
     Key? key,
-    Create<R>? acquire,
+    Create<R>? create,
     required ProxyProviderBuilder<T, R> update,
     UpdateShouldNotify<R>? updateShouldNotify,
     Dispose<R>? dispose,
@@ -102,7 +102,7 @@ class SharedProxyProvider<T, R> extends SharedProvider<R> {
           key: key,
           lazy: lazy,
           builder: builder,
-          acquire: acquire,
+          create: create,
           update: (context, value) => update(
             context,
             Provider.of(context),

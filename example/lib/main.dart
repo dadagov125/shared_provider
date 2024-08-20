@@ -67,7 +67,7 @@ class ScreenA extends StatelessWidget {
       ),
       body: Center(
         child: SharedProvider(
-          acquire: (_) => 'This text was created on screen [A]',
+          create: (_) => 'This text was created on screen [A]',
           dispose: (context, value) {
             print('dispose on screen A:\nshared value => $value');
           },
@@ -97,7 +97,7 @@ class ScreenB extends StatelessWidget {
       ),
       body: Center(
         child: SharedProvider(
-          acquire: (_) => 'This text was created on screen [B]',
+          create: (_) => 'This text was created on screen [B]',
           dispose: (context, value) {
             print('dispose on screen B:\nshared value => $value');
           },
