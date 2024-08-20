@@ -20,8 +20,10 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
     TransitionBuilder? builder,
     bool? lazy,
     StartListening<T>? startListening,
+    bool Function(T, T)? updateShouldNotify,
     T Function(BuildContext, T?)? update,
-  })  : _update = update,
+  })  : _updateShouldNotify = updateShouldNotify,
+        _update = update,
         _startListening = startListening,
         _acquire = acquire,
         _instanceKey = instanceKey,
@@ -37,6 +39,7 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
   final Create<T>? _acquire;
   final StartListening<T>? _startListening;
   final T Function(BuildContext context, T? value)? _update;
+  final UpdateShouldNotify<T>? _updateShouldNotify;
 
   @override
   Widget buildWithChild(BuildContext context, Widget? child) {
@@ -62,12 +65,13 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
               }
               SharedInstance.releaseIfAcquired(_instanceKey, context);
               return SharedInstance.acquire(
-                createValue: () => _acquire!.call(context),
+                createValue: () => newValue,
                 acquirer: context,
                 instanceKey: _instanceKey,
               ).value;
             }
           : null,
+      updateShouldNotify: _updateShouldNotify,
       dispose: (context, value) {
         SharedInstance.releaseIfAcquired(_instanceKey, context);
         if (!SharedInstance.hasAcquirer(_instanceKey)) {
