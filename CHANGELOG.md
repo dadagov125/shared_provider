@@ -1,3 +1,6 @@
+# 0.1.0
+* BREAKING: rename acquire to create
+
 ## 0.0.6
 * SharedProxyProvider
 * add updateShouldNotify
