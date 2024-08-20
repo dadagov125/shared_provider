@@ -85,3 +85,31 @@ class SharedProvider<T> extends SingleChildStatelessWidget {
     );
   }
 }
+
+class SharedProxyProvider<T, R> extends SharedProvider<R> {
+  SharedProxyProvider({
+    required String instanceKey,
+    Key? key,
+    Create<R>? acquire,
+    required ProxyProviderBuilder<T, R> update,
+    UpdateShouldNotify<R>? updateShouldNotify,
+    Dispose<R>? dispose,
+    bool? lazy,
+    TransitionBuilder? builder,
+    Widget? child,
+  }) : super(
+          instanceKey: instanceKey,
+          key: key,
+          lazy: lazy,
+          builder: builder,
+          acquire: acquire,
+          update: (context, value) => update(
+            context,
+            Provider.of(context),
+            value,
+          ),
+          updateShouldNotify: updateShouldNotify,
+          dispose: dispose,
+          child: child,
+        );
+}
